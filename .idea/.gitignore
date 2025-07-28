@@ -8,3 +8,5 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+*/docker-compose.yml
+*/docker-compose_bak.yml

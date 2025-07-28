@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass1!!
+      MYSQL_DATABASE: studyboard
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: rootpass1!!
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+
+  board-app:
+    build:
+      context: ./board-app
+    image: board-app
+    container_name: board-container
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    restart: always
+    networks:
+      - backend
+
+volumes:
+  mysql-data:
+
+networks:
+  backend:
