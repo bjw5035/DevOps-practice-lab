@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-demo
+spec:
+  containers:
+    - name: writer
+      image: busybox
+      command: [ "sh", "-c", "echo Hello from writer > /shared/msg; sleep 3600" ]
+      volumeMounts:
+        - name: shared-vol
+          mountPath: /shared
+    - name: reader
+      image: busybox
+      command: [ "sh", "-c", "cat /shared/msg; sleep 3600" ]
+      volumeMounts:
+        - name: shared-vol
+          mountPath: /shared
+  volumes:
+    - name: shared-vol
+      emptyDir: {} 
