@@ -8,8 +8,7 @@ spec:
   containers:
     - name: demo-container
       image: busybox
-      command:
-        - ["/bin/sh", "-c", "env; sleep 3600"]
+      command: ["/bin/sh", "-c", "env; sleep 3600"]
       env:
         - name: MYSQL_HOST
           valueFrom:
