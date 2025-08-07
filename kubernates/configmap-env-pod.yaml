@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-env-demo
+  labels:
+    role: configmap-env-demo
+spec:
+  containers:
+    - name: demo-container
+      image: busybox
+      command:
+        - ["/bin/sh", "-c", "env; sleep 3600"]
+      env:
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: config-env-map
+        - name: MYSQL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PORT
+              name: config-env-map
+        - name: MYSQL_DB
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: config-env-map
+      imagePullPolicy: IfNotPresent
+#      ports:
+#        - name: configmap-env-demo
+#          containerPort: 80
+#          protocol: TCP
+  restartPolicy: Always
+  
