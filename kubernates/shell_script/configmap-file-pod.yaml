@@ -1,0 +1,31 @@
+# configmap-file-pod.yaml
+# 목적: ConfigMap을 /etc/config 디렉토리에 마운트하는 Pod 생성
+# 컨테이너는 busybox 이미지를 사용하여 테스트 목적으로 실행
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-file-demo      # Pod 이름
+  labels:
+    app: configmap-demo
+spec:
+  containers:
+    - name: demo-container
+      image: busybox                # 가벼운 테스트용 이미지
+      command: ["sh", "-c", "sleep 3600"]  # 1시간 대기 -> exec로 접속하여 파일 확인 가능
+      volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config    # ConfigMap 파일이 마운트될 디렉토리
+          readOnly: true            # ConfigMap은 보통 읽기 전용으로 마운트
+  volumes:
+    - name: config-volume
+      configMap:
+        name: game-config           # 위에서 생성한 ConfigMap 이름 참조
+#data:
+#  # kv format
+#  key: "value"
+#  $actual-config-file$: "name.properties"
+#
+#  # file format
+#  name.properties: |
+#    field=value1,value2
