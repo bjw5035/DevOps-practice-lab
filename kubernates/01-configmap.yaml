@@ -1,3 +1,4 @@
+# key-value 환경변수 주입
 apiVersion: v1
 kind: ConfigMap
 metadata:
