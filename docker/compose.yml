@@ -6,3 +6,19 @@ services:
     image: nginx
     ports:
       - "80:80"
+
+# Redis
+  my-cache-server:
+    image: redis
+    ports:
+      - "6379:6379"
+
+# docker Mysql
+  my-db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd1234
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
