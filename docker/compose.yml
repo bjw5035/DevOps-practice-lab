@@ -1,0 +1,8 @@
+# 여러 DockerFile을 하나로 관리하기 위함
+# 하나의 컨테이너를 Services라고 부른다.
+services:
+  my-web-server:
+    container_name: web-server
+    image: nginx
+    ports:
+      - "80:80"
