@@ -1,0 +1,23 @@
+# cm-file-demo.yaml
+# 목적: ConfigMap 데이터를 파일 형식으로 저장 (Pod에서 /etc/config 경로로 마운트 예정)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-file-demo    # ConfigMap 이름 (file 방식임을 알 수 있게)
+data:
+  game.properties: |    # Pod 내부에 game.properties 라는 파일로 생성됨
+    enemy.types=aliens,robots
+    plyer.lives=3
+    difficulty=normal
+
+  db.properties: |      # 또 다른 파일 생성 가능
+    DB_HOST=localhost
+    DB_PORT=3306
+
+  # kv format
+#  key: "value"
+#  $actual-config-file$: "name.properties"
+
+  # file format
+#  name.properties: |
+#    field=value1,value2
