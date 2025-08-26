@@ -1,4 +1,4 @@
-# configmap-file-pod.yaml
+# configmap-file-pod
 # 목적: ConfigMap을 /etc/config 디렉토리에 마운트하는 Pod 생성
 # 컨테이너는 busybox 이미지를 사용하여 테스트 목적으로 실행
 

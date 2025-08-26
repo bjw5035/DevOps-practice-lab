@@ -1,4 +1,4 @@
-# configmap-file.yaml
+# configmap-file
 # 목적: ConfigMap에 파일 형태의 데이터를 저장하여 Pod에 마운트하는 실습
 # 이 ConfigMap은 'game.properties'라는 키를 가지며, 파일처럼 컨테이너에 투영됩니다.
 
