@@ -2,7 +2,7 @@ name: deploy.yml
 on:
   push:
     branches:
-      - master
+      - main 
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 2222
+          port: 22
           script: |
             cd /home/cook/bootStudy &&
             git pull &&
