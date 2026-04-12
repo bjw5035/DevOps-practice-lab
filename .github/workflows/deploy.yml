@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.10
@@ -20,7 +20,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /home/cook/bootStudy &&
+            cd ~/projects/DevOps-practice-lab &&
             git pull &&
-            cd bootBoard &&
             ./deploy.sh
