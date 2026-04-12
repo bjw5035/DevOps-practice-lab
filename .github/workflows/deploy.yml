@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          port: 2222
           script: |
             cd ~/projects/DevOps-practice-lab &&
             git pull &&
