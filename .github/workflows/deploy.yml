@@ -19,6 +19,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2222
+          use_insecure_cipher: true
           script: |
             cd ~/projects/DevOps-practice-lab &&
             git pull &&
