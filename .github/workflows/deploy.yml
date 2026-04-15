@@ -14,7 +14,7 @@ jobs:
 
       - name: Debug SSH
         run: |
-          ssh -vvv eble@192.168.45.193
+          ssh -vvv eble@61.253.122.70
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.3
         with:
