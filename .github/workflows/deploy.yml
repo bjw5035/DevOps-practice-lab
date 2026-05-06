@@ -21,5 +21,4 @@ jobs:
           port: 2222
           script: |
             cd ~/projects/DevOps-practice-lab &&
-            git pull &&
-            ./deploy.sh
+            git pull
