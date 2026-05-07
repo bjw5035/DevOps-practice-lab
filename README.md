@@ -36,16 +36,20 @@
 ## 🔧 주요 실습 내용
 
 ### 1. CI/CD 파이프라인 (GitHub Actions)
-- `main` 브랜치 push 시 자동 빌드 트리거
-- Docker 이미지 빌드 및 푸시
+- `main` 브랜치 push 시 자동 배포 트리거
+- RSA 키 기반 SSH 인증으로 미니PC 서버에 보안 연결
+- 포트포워딩 + UFW 방화벽 설정으로 외부 접근 구성
+- git pull을 통한 최신 코드 자동 반영
 
 ### 2. Kubernetes (Minikube on Ubuntu)
 - Deployment, Service, Ingress 구성
 - ConfigMap / Secret 환경변수 관리
 - Replica 구성을 통한 무중단 배포 실습
+- Pod 헬스체크 및 리소스 모니터링
 
 ### 3. Docker
 - docker-compose 멀티 컨테이너 환경 구성
+- 커스텀 Dockerfile 작성
 
 ### 4. Linux Shell Script
 - 서버 리소스(CPU, Memory, Disk) 자동 점검
@@ -91,7 +95,8 @@ chmod +x linux_shell/resource_monitor.sh
 ---
 
 ## 📅 업데이트 계획
-
+- [x] GitHub Actions CD 파이프라인 구축 (push → 미니PC 자동 배포)
+- [ ] Docker 이미지 빌드 자동화 추가 (CI 완성)
 - [ ] Terraform으로 AWS VPC/EC2/ALB 인프라 코드화
 - [ ] ArgoCD GitOps 구성 추가
 - [ ] Prometheus + Grafana 대시보드 추가
