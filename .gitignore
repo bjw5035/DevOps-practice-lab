@@ -1,0 +1,45 @@
+# === Terraform ===
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+crash.*.log
+
+# === IDE ===
+.idea/
+.vscode/
+*.iml
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === AWS CLI installer ===
+awscliv2.zip
+aws/
+
+# === Secrets ===
+*.pem
+*.key
+.env
+.env.*
+
+# === Secrets (K8s, env files) ===
+*secret*.yaml
+*secret*.yml
+*credentials*
+*password*
+*.crt
+
+# === Backup files ===
+*_bak.*
+*.bak
+*~
+
+# === Terraform state backup (놓친 항목) ===
+terraform.tfstate.backup
