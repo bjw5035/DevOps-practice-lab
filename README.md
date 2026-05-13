@@ -108,3 +108,4 @@ chmod +x linux_shell/resource_monitor.sh
 - Blog: https://send.tistory.com/
 - Email: send2ugfd@naver.com
 
+
