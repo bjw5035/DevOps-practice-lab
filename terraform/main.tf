@@ -101,3 +101,31 @@ resource "aws_route_table_association" "public_c" {
   subnet_id      = aws_subnet.public_c.id
   route_table_id = aws_route_table.public.id
 }
+
+resource "aws_security_group" "bastion" {
+
+  vpc_id      = aws_vpc.main.id
+  description = "Security Group for Bastion host"
+  name        = "bastion-sg"
+
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.allowed_ssh_cidr]
+    description = "SSH"
+  }
+
+  tags = {
+    Name = "bastion-sg"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound"
+  }
+}
