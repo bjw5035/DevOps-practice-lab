@@ -145,3 +145,47 @@ resource "aws_instance" "bastion" {
 
 }
 
+
+resource "aws_security_group" "alb" {
+
+  vpc_id      = aws_vpc.main.id
+  name        = "alb-sg"
+  description = "Security Group for ALB"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTP from internet"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound"
+  }
+
+  tags = {
+    Name = "alb-sg"
+  }
+}
+
+
+
+
+resource "aws_lb" "main" {
+  name               = "aws-lb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = ["public_a", "public_c"]
+
+  tags = {
+    Name = "LoadBalaner"
+  }
+}
+
+
