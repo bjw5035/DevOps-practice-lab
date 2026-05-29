@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: family-photo-service
+  labels:
+    app: family-photo-service
+spec:
+  replicas: 2   # 실행할 pod 개수
+  selector:
+    matchLabels:
+      app: family-photo-service
+  template:
+    metadata:
+      labels:
+        app: family-photo-service
+    spec:
+      containers:
+        - name: family-photo-service
+          image: family-photo-service:latest
+          imagePullPolicy: Never  # 이미지는 풀하지 않고 로컬 것만 사용
+          ports:
+            - containerPort: 8000  # Dockerfile에서 EXPOSE 확인 필요
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: family-photo-service
+spec:
+  type: NodePort   # 클러스터 외부 접근용 (LoadBalancer도 가능)
+  selector:
+    app: family-photo-service
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30080   # 외부에서 30080 포트로 접근 가능

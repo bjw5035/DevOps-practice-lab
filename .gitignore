@@ -1,11 +1,12 @@
 # === Terraform ===
 .terraform/
-.terraform.lock.hcl
+# .terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 *.tfvars
 crash.log
 crash.*.log
+*.auto.tfvars
 
 # === IDE ===
 .idea/
@@ -40,6 +41,8 @@ aws/
 *_bak.*
 *.bak
 *~
+*.original
+*.num-bak
 
 # === Terraform state backup (놓친 항목) ===
 terraform.tfstate.backup
