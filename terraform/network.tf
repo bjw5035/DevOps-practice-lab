@@ -1,5 +1,5 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
   tags = {
     Name = "devops-practice-vpc"
   }
@@ -8,8 +8,8 @@ resource "aws_vpc" "main" {
 # === Public Subnets (외부 접근용: ALB, Bastion) ===
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "ap-northeast-2a"
+  cidr_block              = var.public_subnet_a_cidr
+  availability_zone       = var.availability_zone_a
   map_public_ip_on_launch = true
 
   tags = {
@@ -20,8 +20,8 @@ resource "aws_subnet" "public_a" {
 
 resource "aws_subnet" "public_c" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.2.0/24"
-  availability_zone       = "ap-northeast-2c"
+  cidr_block              = var.public_subnet_c_cidr
+  availability_zone       = var.availability_zone_c
   map_public_ip_on_launch = true
 
   tags = {
@@ -33,8 +33,8 @@ resource "aws_subnet" "public_c" {
 # === Private Subnets (내부 전용: 앱 EC2, DB) ===
 resource "aws_subnet" "private_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.11.0/24"
-  availability_zone = "ap-northeast-2a"
+  cidr_block        = var.private_subnet_a_cidr
+  availability_zone = var.availability_zone_a
 
   tags = {
     Name = "private-subnet-a"
@@ -44,8 +44,8 @@ resource "aws_subnet" "private_a" {
 
 resource "aws_subnet" "private_c" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.12.0/24"
-  availability_zone = "ap-northeast-2c"
+  cidr_block        = var.private_subnet_a_cidr
+  availability_zone = var.availability_zone_c
 
   tags = {
     Name = "private-subnet-c"
