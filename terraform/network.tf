@@ -1,8 +1,8 @@
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
-  tags = {
-    Name = "devops-practice-vpc"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-vpc"
+  })
 }
 
 # === Public Subnets (외부 접근용: ALB, Bastion) ===
@@ -12,10 +12,10 @@ resource "aws_subnet" "public_a" {
   availability_zone       = var.availability_zone_a
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "public-subnet-a"
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-public-subnet-a"
     Tier = "public"
-  }
+  })
 }
 
 resource "aws_subnet" "public_c" {
@@ -24,10 +24,10 @@ resource "aws_subnet" "public_c" {
   availability_zone       = var.availability_zone_c
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "public-subnet-c"
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-public-subnet-c"
     Tier = "public"
-  }
+  })
 }
 
 # === Private Subnets (내부 전용: 앱 EC2, DB) ===
@@ -36,10 +36,10 @@ resource "aws_subnet" "private_a" {
   cidr_block        = var.private_subnet_a_cidr
   availability_zone = var.availability_zone_a
 
-  tags = {
-    Name = "private-subnet-a"
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-private-subnet-a"
     Tier = "private"
-  }
+  })
 }
 
 resource "aws_subnet" "private_c" {
@@ -47,18 +47,18 @@ resource "aws_subnet" "private_c" {
   cidr_block        = var.private_subnet_a_cidr
   availability_zone = var.availability_zone_c
 
-  tags = {
-    Name = "private-subnet-c"
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-private-subnet-c"
     Tier = "private"
-  }
+  })
 }
 
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
-  tags = {
-    Name = "devops-practice-igw"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-igw"
+  })
 }
 
 # === Public Route Table (퍼블릭 표지판) ===
@@ -69,10 +69,10 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
   }
-  tags = {
-    Name = "public-rt"
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-public-rt"
     Tier = "public"
-  }
+  })
 }
 # === Public Subnet과 Route Table 연결 ===
 resource "aws_route_table_association" "public_a" {

@@ -6,8 +6,8 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids = [aws_security_group.bastion.id]
   key_name               = var.key_name
 
-  tags = {
-    Name = "bastion_host"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-vastion"
+  })
 
 }
