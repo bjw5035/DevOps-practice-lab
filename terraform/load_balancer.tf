@@ -20,9 +20,9 @@ resource "aws_security_group" "alb" {
     description = "Allow all outbound"
   }
 
-  tags = {
-    Name = "alb-sg"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-tg"
+  })
 }
 
 
@@ -37,9 +37,9 @@ resource "aws_lb" "main" {
   # 수정 
   subnets = [aws_subnet.public_a.id, aws_subnet.public_c.id]
 
-  tags = {
-    Name = "main-alb"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-tg"
+  })
 
 }
 
@@ -61,9 +61,9 @@ resource "aws_lb_target_group" "main" {
     unhealthy_threshold = 2
   }
 
-  tags = {
-    Name = "main-tg"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-main-tg"
+  })
 }
 
 # Listener (HTTP 80 받아서 Target Groupdmfh forward)

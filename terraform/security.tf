@@ -13,9 +13,9 @@ resource "aws_security_group" "bastion" {
     description = "SSH"
   }
 
-  tags = {
-    Name = "bastion-sg"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${var.project_name}-bastion"
+  })
 
   egress {
     from_port   = 0

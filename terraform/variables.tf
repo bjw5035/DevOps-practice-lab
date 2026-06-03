@@ -68,3 +68,10 @@ variable "key_name" {
   type        = string
   default     = "bastion-key"
 }
+
+variable "environment" {
+  description = "Environment name for resource tagging"
+  type        = string
+  default     = "dev"
+}
+
