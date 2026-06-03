@@ -1,1 +1,19 @@
+aws_region="ap-northeast-2"
+
+project_name="devops-practice"
+environment="dev"
+
+vpc_cidr="10.0.0.0/16"
+
+public_subnet_a_cidr="10.0.1.0/24"
+public_subnet_c_cidr="10.0.2.0/24"
+private_subnet_a_cidr="10.0.11.0/24"
+private_subnet_c_cidr="10.0.12.0/24"
+
+availability_zon_a="ap-northeast-2a"
+availability_zon_c="ap-northeast-2c"
+
+instance_typ="t2-micro"
+key_name="your-key-name"
+
 allowed_ssh_cidr = "YOUR_PUBLIC_IP/32"
