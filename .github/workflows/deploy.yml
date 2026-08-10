@@ -1,16 +1,19 @@
-name: CI/CD Pipeline 
+name: CI/CD Pipeline
+
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
+      - name: Checkout family-photo-service
         uses: actions/checkout@v4
+        with:
+          repository: bjw5035/family-photo-service
+          path: family-photo-service
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -21,7 +24,7 @@ jobs:
       - name: Docker Build & Push
         uses: docker/build-push-action@v5
         with:
-          context: ./docker
+          context: ./family-photo-service
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-practice-lab:latest
 
@@ -34,4 +37,6 @@ jobs:
           port: 2222
           script: |
             cd ~/projects/DevOps-practice-lab &&
-            git pull
+            git pull &&
+            kubectl apply -f kubernetes/family-photo-service.yaml &&
+            kubectl rollout restart deployment/family-photo-service

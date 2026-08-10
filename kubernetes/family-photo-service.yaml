@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: family-photo-service
+  namespace: default
+  labels:
+    app: family-photo-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: family-photo-service
+  template:
+    metadata:
+      labels:
+        app: family-photo-service
+    spec:
+      containers:
+        - name: family-photo-service
+          image: jjwoos/devops-practice-lab:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: family-photo-service
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: family-photo-service
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30080
