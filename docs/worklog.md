@@ -34,3 +34,12 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
   - AWS 사용 준비 (높음 / 진행 중)
   - Terraform으로 EC2 배포 → destroy (높음 / 시작 전)
 
+### Terraform Docker provider 로컬 실습
+- eble 로컬에서 Terraform `kreuzwerker/docker` provider로 컨테이너 apply/destroy 흐름 연습
+- `terraform/docker-practice/`에 격리된 환경 구성 (기존 minikube·AWS terraform state와 분리) — 상세 아키텍처/구성 방법/개념 정리는 [terraform-docker-practice-notes.md](terraform-docker-practice-notes.md) 참고
+- 코드는 직접 작성하며 문법 연습 (resource 타입/별명 구분, 리소스 간 참조, provider별 속성명 차이 등)
+- `terraform init` → `plan`까지 정상 검증 완료. 이번엔 `apply`/`destroy`는 진행하지 않기로 결정 (검증까지만으로 목적 달성 판단)
+- 오늘 안에 Docker provider 리소스 전반을 순서대로 익히기로 함: `docker_volume` → `env` 속성 → 컨테이너 2개 연결 → `healthcheck`/`restart_policy`
+- `docker_volume` 리소스 작성 + `docker_container`의 `volumes` 블록으로 연결까지 완료 (직접 작성, 참조 문법 정확히 적용)
+- `env` 속성 작성 중간에 오늘 실습 종료 — 상세 개념 정리는 [terraform-docker-practice-notes.md](terraform-docker-practice-notes.md) 참고
+
