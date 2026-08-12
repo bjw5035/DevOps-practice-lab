@@ -9,6 +9,7 @@ resource "docker_image" "devops-practice-lab" {
 resource "docker_container" "devops-practice-lab" {
   name  = "devops-practice-lab"
   image = docker_image.devops-practice-lab.image_id
+  env   = ["API_KEY=dev-key"]
 
   networks_advanced {
     name = docker_network.tf-practice-net.name
@@ -24,6 +25,7 @@ resource "docker_container" "devops-practice-lab" {
     volume_name = docker_volume.tf-practice-vol.name
     container_path = "/data"
   }
+
 }
 
 resource "docker_volume" "tf-practice-vol" {
