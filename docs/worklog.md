@@ -79,3 +79,18 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
 - 확인 후 `terraform destroy`로 리소스 8개(컨테이너 3 + 이미지 3 + 네트워크 1 + 볼륨 1) 정리, minikube 컨테이너는 영향 없음 확인
 - 실습 중 나온 개념 설명(provider별 시스템 격리, state가 디렉토리 단위로 독립적인 이유, docker provider로 만든 컨테이너가 k8s에 안 보이는 이유 등)은 Notion "🟢 Terraform 입문" 위키 페이지에 반영
 - 로컬에 terraform 바이너리(`/usr/bin/terraform` v1.15.8)가 설치되어 있는 것 확인 — 기존에 기록해둔 "Docker 컨테이너로 terraform 실행" 방식과 다르게, 지금은 로컬 설치본으로 직접 실행 중인 것으로 보임 (전환 시점 미확인)
+
+### terraform/ 디렉토리 재구성
+- 예전 VPC+ALB+Bastion 구조(2026-05~06월 작업분)를 `terraform/archive-aws-vpc-alb-bastion/`으로 이동, 상태/날짜/백업여부 정리한 README.md 추가
+- 새 실습용 `terraform/aws-ec2-minimal-deploy/` 디렉토리 신설 (ALB/NAT/RDS 생략, EC2 하나만 최소 구성)
+
+### 보안: 공개 저장소에 노출된 집 공인 IP 제거
+- `terraform/PLAN_RESULT.txt`, `terraform.tfstate`(과거 커밋), `.github/workflows/deploy.yml`(과거 커밋)에 집 공인 IP가 평문으로 남아있던 것 발견 (2026-06-03 커밋부터 약 2개월간 public GitHub 저장소에 노출)
+- `git filter-repo --replace-text`로 전체 히스토리(74개 커밋)에서 해당 IP를 `0.0.0.0`으로 치환 → `git push --force`로 반영 완료, 확인 결과 현재 `main`/`git log`/`git clone` 어디에도 안 남아있음
+- `.gitignore`에 `PLAN_RESULT.txt` 등 terraform 명령어 결과 덤프 패턴 추가해 재발 방지
+- Notion "🔴 Terraform 고급" 위키에 사고 사례로 정리, TO-DO DB에 후속 대응(다른 곳에 clone된 게 있으면 재동기화 필요) 항목 추가
+
+### aws-ec2-minimal-deploy: VPC 네트워킹 작성 시작
+- `network.tf`에 `aws_vpc` → `aws_subnet`(public, `map_public_ip_on_launch = true`) → `aws_internet_gateway` → `aws_route_table`(0.0.0.0/0 → IGW route 포함)까지 직접 작성 (오타/누락 확인하며 진행: 태그 `Name` 대문자, subnet에 `availability_zone`/`map_public_ip_on_launch` 누락, IGW 리소스 자체 누락 등)
+- Notion "🌐 VPC 기본 구조" 위키에 VPC→Subnet→IGW→RouteTable 개념을 "신도시 개발" 비유로 정리해 추가
+- **다음에 이어할 지점**: `aws_route_table_association`으로 서브넷-라우팅테이블 연결 아직 안 함, `provider.tf`도 아직 빈 파일 — 이 둘만 하면 network.tf 마무리, 이후 security.tf → compute.tf → outputs.tf 순서
