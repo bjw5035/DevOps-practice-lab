@@ -88,9 +88,7 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
 - `terraform/PLAN_RESULT.txt`, `terraform.tfstate`(과거 커밋), `.github/workflows/deploy.yml`(과거 커밋)에 집 공인 IP가 평문으로 남아있던 것 발견 (2026-06-03 커밋부터 약 2개월간 public GitHub 저장소에 노출)
 - `git filter-repo --replace-text`로 전체 히스토리(74개 커밋)에서 해당 IP를 `0.0.0.0`으로 치환 → `git push --force`로 반영 완료, 확인 결과 현재 `main`/`git log`/`git clone` 어디에도 안 남아있음
 - `.gitignore`에 `PLAN_RESULT.txt` 등 terraform 명령어 결과 덤프 패턴 추가해 재발 방지
-- Notion "🔴 Terraform 고급" 위키에 사고 사례로 정리, TO-DO DB에 후속 대응(다른 곳에 clone된 게 있으면 재동기화 필요) 항목 추가
 
 ### aws-ec2-minimal-deploy: VPC 네트워킹 작성 시작
 - `network.tf`에 `aws_vpc` → `aws_subnet`(public, `map_public_ip_on_launch = true`) → `aws_internet_gateway` → `aws_route_table`(0.0.0.0/0 → IGW route 포함)까지 직접 작성 (오타/누락 확인하며 진행: 태그 `Name` 대문자, subnet에 `availability_zone`/`map_public_ip_on_launch` 누락, IGW 리소스 자체 누락 등)
-- Notion "🌐 VPC 기본 구조" 위키에 VPC→Subnet→IGW→RouteTable 개념을 "신도시 개발" 비유로 정리해 추가
 - **다음에 이어할 지점**: `aws_route_table_association`으로 서브넷-라우팅테이블 연결 아직 안 함, `provider.tf`도 아직 빈 파일 — 이 둘만 하면 network.tf 마무리, 이후 security.tf → compute.tf → outputs.tf 순서
