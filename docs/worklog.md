@@ -67,3 +67,9 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
 - 결과: `jjwoos/devops-practice-lab:latest` → `deploy.yml` 커밋 내용과 실제 클러스터 상태 일치 확인
 - 2026-08-11에 남겨뒀던 TODO 완료 처리
 
+### AWS 실배포 사전 체크리스트 완료
+- `aws sts get-caller-identity`로 확인: 로컬 AWS CLI가 `terraform-user` IAM 사용자로 이미 구성되어 있음 확인 (Account: 282772004523)
+- Billing Alert 설정 완료 (Claude 브라우저로 콘솔에서 진행)
+- IAM 사용자 확인 완료 (Claude 브라우저로 진행)
+- 2026-08-11 체크리스트 3항목(Billing Alert / IAM 사용자 생성 / AWS CLI·access key) 모두 완료 → "Terraform으로 EC2 배포 → destroy" 실습 시작 가능한 상태
+
