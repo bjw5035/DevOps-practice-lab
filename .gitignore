@@ -46,3 +46,12 @@ aws/
 
 # === Terraform state backup (놓친 항목) ===
 terraform.tfstate.backup
+
+# === Terraform 명령어 결과 덤프 (실제 리소스 정보/IP 등이 그대로 남을 수 있음) ===
+PLAN_RESULT.txt
+PLAN_ANALYSIS.md
+RESOURCE_OVERVIEW.md
+*plan_result*
+*plan-result*
+*terraform_plan*.txt
+*terraform-plan*.txt
