@@ -6,6 +6,44 @@ resource "docker_image" "devops-practice-lab" {
   name = "jjwoos/devops-practice-lab:latest"
 }
 
+resource "docker_image" "nginx" {
+  name = "nginx:latest"
+}
+
+resource "docker_image" "redis" {
+  name = "redis:latest"
+}
+
+resource "docker_container" "redis" {
+  name = "redis"
+  image = docker_image.redis.image_id
+
+  networks_advanced {
+    name = docker_network.tf-practice-net.name
+  }
+
+  ports {
+    internal = 6379
+    external = 6379
+    protocol = "tcp"
+  }
+}
+
+resource "docker_container" "nginx" {
+  name = "nginx"
+  image = docker_image.nginx.image_id
+
+  networks_advanced {
+    name = docker_network.tf-practice-net.name
+  }
+
+  ports {
+    internal = 80
+    external = 8081
+    protocol = "tcp"
+  }
+}
+
 resource "docker_container" "devops-practice-lab" {
   name  = "devops-practice-lab"
   image = docker_image.devops-practice-lab.image_id
