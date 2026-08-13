@@ -15,7 +15,7 @@ resource "docker_image" "redis" {
 }
 
 resource "docker_container" "redis" {
-  name = "redis"
+  name  = "redis"
   image = docker_image.redis.image_id
 
   networks_advanced {
@@ -30,7 +30,7 @@ resource "docker_container" "redis" {
 }
 
 resource "docker_container" "nginx" {
-  name = "nginx"
+  name  = "nginx"
   image = docker_image.nginx.image_id
 
   networks_advanced {
@@ -60,7 +60,7 @@ resource "docker_container" "devops-practice-lab" {
   }
 
   volumes {
-    volume_name = docker_volume.tf-practice-vol.name
+    volume_name    = docker_volume.tf-practice-vol.name
     container_path = "/data"
   }
 

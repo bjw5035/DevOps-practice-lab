@@ -73,3 +73,9 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
 - IAM 사용자 확인 완료 (Claude 브라우저로 진행)
 - 2026-08-11 체크리스트 3항목(Billing Alert / IAM 사용자 생성 / AWS CLI·access key) 모두 완료 → "Terraform으로 EC2 배포 → destroy" 실습 시작 가능한 상태
 
+### docker-practice: 컨테이너 2개 네트워크 연결 (완료)
+- `main.tf`에 `docker_image`/`docker_container` 리소스로 nginx, redis 추가, 기존 `devops-practice-lab`과 함께 `tf-practice-net`에 연결 (직접 작성, 오타/포트 문제 확인하며 진행)
+- `terraform fmt`, `plan` 문제없이 통과 → `terraform apply`로 실제 컨테이너 3개(devops-practice-lab/nginx/redis) 기동 확인 (nginx 8081, redis 6379, devops-practice-lab 8080)
+- 확인 후 `terraform destroy`로 리소스 8개(컨테이너 3 + 이미지 3 + 네트워크 1 + 볼륨 1) 정리, minikube 컨테이너는 영향 없음 확인
+- 실습 중 나온 개념 설명(provider별 시스템 격리, state가 디렉토리 단위로 독립적인 이유, docker provider로 만든 컨테이너가 k8s에 안 보이는 이유 등)은 Notion "🟢 Terraform 입문" 위키 페이지에 반영
+- 로컬에 terraform 바이너리(`/usr/bin/terraform` v1.15.8)가 설치되어 있는 것 확인 — 기존에 기록해둔 "Docker 컨테이너로 terraform 실행" 방식과 다르게, 지금은 로컬 설치본으로 직접 실행 중인 것으로 보임 (전환 시점 미확인)
