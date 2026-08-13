@@ -43,3 +43,27 @@ Phase 2 SG 설계 진행 (ingress 1개, egress 검토 중)
 - `docker_volume` 리소스 작성 + `docker_container`의 `volumes` 블록으로 연결까지 완료 (직접 작성, 참조 문법 정확히 적용)
 - `env` 속성 작성 중간에 오늘 실습 종료 — 상세 개념 정리는 [terraform-docker-practice-notes.md](terraform-docker-practice-notes.md) 참고
 
+===========================================================================
+
+## 2026-08-12
+
+### Terraform Docker provider 로컬 실습 이어서
+- `docker_container`에 `env` 속성 완성: `env = ["API_KEY=dev-key"]`
+  - `API_KEY`는 family-photo-service(`app/auth.py`)가 `X-API-Key` 헤더 검증에 쓰는 유일한 앱 레벨 환경변수 (Dockerfile 기본값 `dev-key`)
+- `terraform plan` 무에러 확인
+- 커밋: `feat: docker_container env 속성 추가 (API_KEY)` (직접 커밋 진행)
+- 다음 단계 방향 결정: 두 번째 `docker_image`/`docker_container` 리소스를 새로 추가해서 같은 네트워크(`tf-practice-net`)에 붙여 컨테이너 2개 통신 확인 → 작업 완료/중단 시 `destroy`로 정리, 필요할 때 다시 `apply`로 재현
+- **다음에 이어할 지점**: 두 번째 컨테이너용 `docker_image`/`docker_container` 리소스 작성 시작 전 (이미지 미정)
+
+### 기타
+- `kubectl get pods -n <ns> -A` 처럼 `-n`과 `-A`(all-namespaces)를 같이 쓰면 `-A`가 우선 적용돼 전체 네임스페이스가 나온다는 점 확인 (원하는 네임스페이스만 보려면 `-A` 빼야 함)
+
+===========================================================================
+
+## 2026-08-13
+
+### CI/CD 이미지 eble 실제 반영 확인 (완료)
+- `kubectl get deployment family-photo-service -o jsonpath='{.spec.template.spec.containers[0].image}'` 실행
+- 결과: `jjwoos/devops-practice-lab:latest` → `deploy.yml` 커밋 내용과 실제 클러스터 상태 일치 확인
+- 2026-08-11에 남겨뒀던 TODO 완료 처리
+
